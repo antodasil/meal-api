@@ -1,0 +1,6 @@
+{
+    "routes": [
+        { "name": "hello", "path": "/hello", "controller": "Hello"},
+        { "name": "accueil", "path": "/", "controller": "Accueil"}
+    ]
+}
