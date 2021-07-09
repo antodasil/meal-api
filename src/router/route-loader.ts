@@ -1,6 +1,6 @@
 import { Express } from 'express-serve-static-core';
 import fs from 'fs';
-import { BaseController } from '../controllers/BaseController';
+import { BaseController } from '../controllers/base.controller';
 
 interface Route {
     name: string;
@@ -32,13 +32,12 @@ export class RouteLoader {
             }
 
             // On charge le controller
-            let controllerName = route.controller.endsWith('Controller') ? route.controller : route.controller + 'Controller';
-            let module = await import(process.cwd() + '\\out\\controllers\\' + controllerName + '.js');
+            let module = await import(process.cwd() + '\\out\\controllers\\' + route.controller + '.controller.js');
             let controller: BaseController = module?.controller;
 
             // Création des routes pour ce controller
             if(!controller) {
-                console.log('Route ignored: Controller ' + controllerName + ' not found');
+                console.log('Route ignored: Controller ' + route.controller + ' not found');
                 continue;
             }
 

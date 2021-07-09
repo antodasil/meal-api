@@ -1,5 +1,5 @@
 import express from 'express';
-import { RouteLoader } from './out/router/RouteLoader.js';
+import { RouteLoader } from './out/router/route-loader.js';
 
 const app = express();
 const PORT = 3000;
