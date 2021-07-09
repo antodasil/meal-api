@@ -2,7 +2,7 @@
   "name": "meal-app",
   "version": "1.0.0",
   "description": "App to generate meals",
-  "main": "index.js",
+  "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc --p tsconfig.dev.json",
