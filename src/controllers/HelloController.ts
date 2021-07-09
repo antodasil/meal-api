@@ -1,8 +1,8 @@
-import * as core from 'express-serve-static-core';
+import { Request, Response } from 'express-serve-static-core';
 import { BaseController } from './BaseController';
 
 class HelloController extends BaseController {
-    get(req: core.Request, res: core.Response) {
+    get(req: Request, res: Response) {
         res.json({'hello': 'world'});
     }
 }
