@@ -2,10 +2,12 @@ import express from 'express';
 import { RouteLoader } from './out/router/route-loader.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-(new RouteLoader()).loadRoutes(app).then(() => {
-    app.listen(PORT, () => {
-      console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
-    });
-});
+// Load routes
+await(new RouteLoader()).loadRoutes(app);
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
+}); 
