@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsc --p tsconfig.dev.json"
+    "dev": "tsc --p tsconfig.dev.json",
+    "start": "node index.mjs"
   },
   "author": "Antoine Da Silva",
   "license": "MIT",
