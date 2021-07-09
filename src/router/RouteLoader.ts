@@ -1,4 +1,4 @@
-import * as core from 'express-serve-static-core';
+import { Express } from 'express-serve-static-core';
 import fs from 'fs';
 import { BaseController } from '../controllers/BaseController';
 
@@ -14,13 +14,15 @@ class RouteLoaderError extends Error {
 
 export class RouteLoader {
 
-    async loadRoutes(app: core.Express, filePath?: string): Promise<boolean> {
+    async loadRoutes(app: Express, filePath?: string): Promise<boolean> {
 
+        // Liste des routes
         let routes: Route[] = this.getRoutesFromFile(filePath);
         for(const route of routes) {
 
+            // Si route incomplète, on l'ignore
             if(!route.name || !route.path || !route.controller) {
-                console.log('Route ignored: ' + route.name ? route.name : route.path);
+                console.log('Route ignored: Route ' + route.name ? route.name : route.path + ' incomplete');
                 continue;
             }
 
@@ -29,33 +31,36 @@ export class RouteLoader {
                 route.path = route.path.slice(0, route.path.length-1);
             }
 
+            // On charge le controller
             let controllerName = route.controller.endsWith('Controller') ? route.controller : route.controller + 'Controller';
-            await import(process.cwd() + '\\out\\controllers\\' + controllerName + '.js').then((module) => {
-                let controller: BaseController = module?.controller;
-                if(!controller) {
-                    console.log('Controller ' + controllerName + ' not found');
-                } else {
-                    if(controller.get) {
-                        app.get(route.path + '/:id?', controller.get);
-                    }
-                    
-                    if(controller.post) {
-                        app.post(route.path + '/:id?', controller.post);
-                    }
-                    
-                    if(controller.put) {
-                        app.put(route.path + '/:id?', controller.put);
-                    }
-                    
-                    if(controller.patch) {
-                        app.patch(route.path + '/:id?', controller.patch);
-                    }
-                    
-                    if(controller.delete) {
-                        app.delete(route.path + '/:id?', controller.delete);
-                    }
-                }
-            });
+            let module = await import(process.cwd() + '\\out\\controllers\\' + controllerName + '.js');
+            let controller: BaseController = module?.controller;
+
+            // Création des routes pour ce controller
+            if(!controller) {
+                console.log('Route ignored: Controller ' + controllerName + ' not found');
+                continue;
+            }
+
+            if(controller.get) {
+                app.get(route.path + '/:id?', controller.get);
+            }
+            
+            if(controller.post) {
+                app.post(route.path, controller.post);
+            }
+            
+            if(controller.put) {
+                app.put(route.path + '/:id?', controller.put);
+            }
+            
+            if(controller.patch) {
+                app.patch(route.path + '/:id?', controller.patch);
+            }
+            
+            if(controller.delete) {
+                app.delete(route.path + '/:id?', controller.delete);
+            }
         }
         return true;
     }
