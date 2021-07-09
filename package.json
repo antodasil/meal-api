@@ -5,8 +5,8 @@
   "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsc --p tsconfig.dev.json",
-    "start": "node index.mjs"
+    "build-dev": "tsc --p tsconfig.dev.json -w",
+    "dev": "SET NODE_ENV=development&& ts-node index.mjs"
   },
   "author": "Antoine Da Silva",
   "license": "MIT",
@@ -15,5 +15,8 @@
     "@types/node": "^16.0.1",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "winston": "^3.3.3"
   }
 }
