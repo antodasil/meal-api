@@ -1,5 +1,6 @@
 import { Express } from 'express-serve-static-core';
 import fs from 'fs';
+import path from 'path';
 import { BaseController } from '../controllers/base.controller';
 
 interface Route {
@@ -41,11 +42,11 @@ export class RouteLoader {
     }
 
     /** Obtient la liste des routes décritent dans le fichier donné */
-    private getRoutesFromFile(filePath: string = '\\config\\routes.json'): Route[] {
+    private getRoutesFromFile(filePath: string = './config/routes.json'): Route[] {
         let routes: Route[];
 
         try {
-            let rawRoutes = fs.readFileSync(process.cwd() + filePath, {encoding: 'utf8'});
+            let rawRoutes = fs.readFileSync(path.resolve(process.cwd(), filePath), {encoding: 'utf8'});
             routes = JSON.parse(rawRoutes).routes;
         } catch(error) {
             if(error instanceof Error) {
@@ -65,36 +66,36 @@ export class RouteLoader {
     private async loadRouteController(route: Route): Promise<any> {
 
         // On charge le controller
-        let module = await import(process.cwd() + '\\out\\controllers\\' + route.controller + '.controller.js');
+        let module = await import(path.resolve(process.cwd(), './out/controllers/' + route.controller + '.controller.js'));
         return module?.controller;
     }
 
     /** Créé les routes pour chaque méthode du controller */
-    private createRoutesFromController(app: Express, path: string, controller: BaseController): void {
+    private createRoutesFromController(app: Express, url: string, controller: BaseController): void {
 
         // On supprime le '/' de fin s'il y en a un 
-        if(path.endsWith('/')) {
-            path = path.slice(0, path.length-1);
+        if(url.endsWith('/')) {
+            url = url.slice(0, url.length-1);
         }
 
         if(controller.get) {
-            app.get(path + '/:id?', controller.get);
+            app.get(url + '/:id?', controller.get);
         }
         
         if(controller.post) {
-            app.post(path, controller.post);
+            app.post(url, controller.post);
         }
         
         if(controller.put) {
-            app.put(path + '/:id?', controller.put);
+            app.put(url + '/:id?', controller.put);
         }
         
         if(controller.patch) {
-            app.patch(path + '/:id?', controller.patch);
+            app.patch(url + '/:id?', controller.patch);
         }
         
         if(controller.delete) {
-            app.delete(path + '/:id?', controller.delete);
+            app.delete(url + '/:id?', controller.delete);
         }
     }
 }
