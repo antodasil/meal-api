@@ -1,6 +1,10 @@
 import express from 'express';
 import { RouteLoader } from './out/router/route-loader.js';
 import dotenv from 'dotenv';
+import tsconfigPath from 'tsconfig-paths';
+
+// To use tsconfig.paths
+tsconfigPath.register();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
