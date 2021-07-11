@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-dev": "tsc --p tsconfig.dev.json -w",
-    "dev": "SET NODE_ENV=development&& ts-node index.mjs"
+    "dev": " ts-node index.mjs"
   },
   "author": "Antoine Da Silva",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "dotenv": "^10.0.0",
     "winston": "^3.3.3"
   }
 }
