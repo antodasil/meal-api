@@ -1,6 +1,6 @@
 import { Request, Response } from 'express-serve-static-core';
 
-export default class BaseController {
+export class BaseController {
     get(req: Request, res: Response) {
         throw new Error('Get method not implemented yet');
     }
