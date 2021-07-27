@@ -1,10 +1,18 @@
-import { Request, Response } from 'express-serve-static-core';
-import {BaseController} from 'base-controller';
+import { Request, Response } from "express-serve-static-core";
+import { BaseController } from "./base.controller";
+import Route from "../decorators/route.decorator";
+// import Logger from 'logger';
 
 class AccueilController extends BaseController {
-    get(req: Request, res: Response) {
-        res.json({'accueil': 'ok'});
-    }
+  @Route({
+    path: "/",
+    method: "get",
+    public: true,
+  })
+  get(req: Request, res: Response) {
+    // Logger.debug('Debug log');
+    res.json({ accueil: "ok" });
+  }
 }
 
-export const controller = new AccueilController();
+export const Accueil = new AccueilController();

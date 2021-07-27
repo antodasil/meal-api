@@ -1,4 +1,5 @@
-import { Express } from "express-serve-static-core";
+import { Router } from "express-serve-static-core";
+import express from "express";
 import fs from "fs";
 import path from "path";
 import { BaseController } from "../controllers/base.controller";
@@ -15,7 +16,9 @@ class RouteLoaderError extends Error {
 
 export class RouteLoader {
   /** Charge les routes depuis un fichier */
-  async loadRoutes(app: Express, filePath?: string): Promise<boolean> {
+  async getRouter(filePath?: string): Promise<Router> {
+    const router = express.Router();
+
     // Liste des routes
     let routes: Route[] = this.getRoutesFromFile(filePath);
     for (const route of routes) {
@@ -39,9 +42,10 @@ export class RouteLoader {
         );
         continue;
       }
-      this.createRoutesFromController(app, route.path, controller);
+      this.createRoutesFromController(router, route.path, controller);
     }
-    return true;
+
+    return router;
   }
 
   /** Obtient la liste des routes décritent dans le fichier donné */
@@ -83,7 +87,7 @@ export class RouteLoader {
 
   /** Créé les routes pour chaque méthode du controller */
   private createRoutesFromController(
-    app: Express,
+    router: Router,
     url: string,
     controller: BaseController
   ): void {
@@ -93,23 +97,23 @@ export class RouteLoader {
     }
 
     if (controller.get) {
-      app.get(url + "/:id?", controller.get.bind(controller));
+      router.get(url + "/:id?", controller.get.bind(controller));
     }
 
     if (controller.post) {
-      app.post(url, controller.post.bind(controller));
+      router.post(url, controller.post.bind(controller));
     }
 
     if (controller.put) {
-      app.put(url + "/:id?", controller.put.bind(controller));
+      router.put(url + "/:id?", controller.put.bind(controller));
     }
 
     if (controller.patch) {
-      app.patch(url + "/:id?", controller.patch.bind(controller));
+      router.patch(url + "/:id?", controller.patch.bind(controller));
     }
 
     if (controller.delete) {
-      app.delete(url + "/:id?", controller.delete);
+      router.delete(url + "/:id?", controller.delete);
     }
   }
 }

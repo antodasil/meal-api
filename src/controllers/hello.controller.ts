@@ -1,10 +1,14 @@
 import { Request, Response } from "express-serve-static-core";
 import { BaseController } from "./base.controller";
+import Route from "../decorators/route.decorator";
 
-class HelloController extends BaseController {
-  get(req: Request, res: Response) {
-    res.json({ hello: "world" });
+export class HelloController extends BaseController {
+  @Route({
+    path: "/hello",
+    method: "get",
+    public: true,
+  })
+  get(request: Request, response: Response) {
+    response.json({ hello: "world" });
   }
 }
-
-export const controller = new HelloController();
