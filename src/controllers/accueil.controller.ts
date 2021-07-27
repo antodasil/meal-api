@@ -1,16 +1,14 @@
 import { Request, Response } from "express-serve-static-core";
 import { BaseController } from "./base.controller";
 import Route from "../decorators/route.decorator";
-// import Logger from 'logger';
 
 export class AccueilController extends BaseController {
   @Route({
     path: "/",
     public: true,
   })
-  get(req: Request, res: Response) {
-    // Logger.debug('Debug log');
-    res.json({ accueil: "ok" });
+  get(request: Request, response: Response) {
+    response.json({ accueil: "ok" });
   }
 }
 
