@@ -3,10 +3,9 @@ import { BaseController } from "./base.controller";
 import Route from "../decorators/route.decorator";
 // import Logger from 'logger';
 
-class AccueilController extends BaseController {
+export class AccueilController extends BaseController {
   @Route({
     path: "/",
-    method: "get",
     public: true,
   })
   get(req: Request, res: Response) {
