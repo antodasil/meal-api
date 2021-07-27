@@ -34,6 +34,14 @@ app.use("/", publicRouter);
 app.use("/", privateRouter);
 
 // Start server
-app.listen(PORT, () => {
+let server = app.listen(PORT, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${PORT}`);
+});
+
+// Shutdown server on ctrl+C
+process.on("SIGINT", async () => {
+  console.log("Caught interrupt signal");
+  server.close(() => {
+    console.log("server closed");
+  });
 });
