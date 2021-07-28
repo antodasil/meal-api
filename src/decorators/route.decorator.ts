@@ -13,7 +13,7 @@ interface RouteOptions {
   public?: boolean;
 }
 
-export default function Route(options: RouteOptions) {
+export function Route(options: RouteOptions) {
   return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
     if (!HTTPMethods.includes(propertyKey)) {
       Logger.error(

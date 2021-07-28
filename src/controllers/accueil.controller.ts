@@ -1,6 +1,6 @@
 import { Request, Response } from "express-serve-static-core";
 import { BaseController } from "./base.controller";
-import Route from "../decorators/route.decorator";
+import { Route } from "../decorators";
 
 export class AccueilController extends BaseController {
   @Route({
