@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Logger from "../logger/init-logger";
+import Logger from "../logger";
 
 export const publicRouter = Router();
 export const privateRouter = Router();
