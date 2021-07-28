@@ -1,5 +1,5 @@
 import winston from "winston";
-import { isDevelopmentEnv } from "../utils/app-utils";
+import { isDevelopmentEnv } from "../utils";
 
 // List of log levels
 const levels = {
