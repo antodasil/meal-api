@@ -1,6 +1,0 @@
-{
-    "routes": [
-        { "name": "hello", "path": "/hello", "controller": "hello"},
-        { "name": "accueil", "path": "/", "controller": "accueil"}
-    ]
-}

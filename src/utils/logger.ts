@@ -1,5 +1,5 @@
 import winston from "winston";
-import { isDevelopmentEnv } from "../utils";
+import { isDevelopmentEnv } from ".";
 
 // List of log levels
 const levels = {
@@ -29,9 +29,9 @@ if (isDevelopmentEnv()) {
 // Print format
 const format = winston.format.combine(
   winston.format.timestamp({ format: "DD/MM/YYYY HH:mm:ss:ms" }),
-  // winston.format.colorize({all: true}),
+  winston.format.colorize({ level: true }),
   winston.format.printf(
-    (info) => `${info.timestamp} ${info.level.toUpperCase()}: ${info.message}`
+    (info) => `${info.timestamp} [${info.level}]: ${info.message}`
   )
 );
 
@@ -44,11 +44,9 @@ const transports = isDevelopmentEnv()
     });
 
 // Logger
-const Logger = winston.createLogger({
+export const logger = winston.createLogger({
   level: level(),
   levels,
   format,
   transports,
 });
-
-export default Logger;

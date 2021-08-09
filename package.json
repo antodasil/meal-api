@@ -5,20 +5,19 @@
   "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-dev": "tsc --p tsconfig.dev.json -w",
-    "dev": "node index.mjs"
+    "start": "ts-node src/index.ts"
   },
   "author": "Antoine Da Silva",
   "license": "MIT",
   "devDependencies": {
     "@types/express": "^4.17.13",
-    "@types/node": "^16.0.1",
-    "ts-node": "^10.0.0",
-    "typescript": "^4.3.5"
+    "@types/node": "^16.4.11",
+    "@types/winston": "^2.4.4"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
-    "tsconfig-paths": "^3.10.1",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5",
     "winston": "^3.3.3"
   }
 }
