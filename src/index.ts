@@ -10,7 +10,8 @@ if (propertiesLoadingRes.error) {
 
 // Express App
 import express from "express";
-import { publicRouter, privateRouter } from "./router";
+import { Database } from "./model/database";
+import defaultRouter from "./router";
 import { logger } from "./utils";
 
 // Create app
@@ -20,8 +21,7 @@ const PORT = process.env.PORT || 3000;
 
 // Load controllers and add routers
 import "./controllers";
-app.use("/", publicRouter);
-app.use("/", privateRouter);
+app.use(defaultRouter);
 
 // Start server
 let server = app.listen(PORT, () => {
@@ -31,6 +31,8 @@ let server = app.listen(PORT, () => {
 // Shutdown server on ctrl+C
 process.on("SIGINT", async () => {
   logger.info("Caught interrupt signal");
+  await Database.getInstance().release();
+  logger.info("Database connections released");
   server.close(() => {
     logger.info("Server closed");
   });

@@ -11,13 +11,14 @@ interface RouteOptions {
 // Route decorator
 export function Route(options: RouteOptions) {
   return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
-    if (!HTTPMethods.includes(propertyKey)) {
+    const method = propertyKey.toLowerCase();
+    if (!HTTPMethods.includes(method)) {
       logger.error(
-        "Route decorator: " + propertyKey + " is not an HTTP method allowed"
+        "Route decorator: " + method + " is not an HTTP method allowed"
       );
       return;
     }
     const router: any = options.public ? publicRouter : privateRouter;
-    router[propertyKey](options.path, target[propertyKey].bind(target));
+    router[method](options.path, target[method].bind(target));
   };
 }

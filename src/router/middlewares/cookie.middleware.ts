@@ -7,9 +7,9 @@ export function CookieMiddleware(
   next: any
 ) {
   const cookiesString = request.headers.cookie;
-  response.locals.cookie = {};
+  request.cookies = {};
   if (cookiesString) {
-    response.locals.cookie = cookiesString.split(";").reduce((res, item) => {
+    request.cookies = cookiesString.split(";").reduce((res, item) => {
       const data = item.trim().split("=");
       return { ...res, [data[0]]: data[1] };
     }, {});
