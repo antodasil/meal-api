@@ -1,5 +1,5 @@
 {
-  "name": "meal-app",
+  "name": "meal-api",
   "version": "1.0.0",
   "description": "App to generate meals",
   "main": "index.mjs",
